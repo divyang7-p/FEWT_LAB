@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        num1=parseFloat(prompt("Enter Number first :- "));
+        num2=parseFloat(prompt("Enter Number second :- "));
+        if(num1>num2){
+            a=prompt("Enter operation you have to perform (+,-,*,/):- ");
+            if(a=='+'){
+                alert("sum="+(num1+num2));
+            }
+            else if(a=='-'){
+                alert("substraction="+(num1-num2));
+            }
+            else if(a=='*'){
+                alert("multipliccation="+(num1-num2));
+            }
+            else if(a=='/'){
+                alert("division="+(num1/num2));
+            }
+            else{
+                alert("Invalid Input..")
+            }
+        }
+        else{
+            alert("First number first should be grater than number second..")
+        }
+    </script>
+</body>
+</html>

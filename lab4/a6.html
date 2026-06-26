@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        ans=""
+        a=parseInt(prompt("Enter A Number(0-999) :- "));
+        if(a>999 || a<0){
+            document.write("Number Out OF range!!!")
+        }
+        zero=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"]
+        tens=["","","twenty","thirty","fourty","fifty","sixty","seventy","eighty","ninety"]
+        houndreds=["one houndred","two houndred","three houndred","four houndred",'five houndred',"six houndred","seven houndred","eight houndred","nine houndred"]
+        if(a>99){
+            a=parseInt(a/100);
+            ans+=houndreds[a-1]
+            a=a%100;
+        }
+        if(a>19){
+            a=parseInt(a/10)
+            ans+=tens[a];
+            a=a%10
+        }
+        if(a>=0){
+           ans+=zero[a-1]
+        }
+        document.write(ans)
+    </script>
+</body>
+</html>

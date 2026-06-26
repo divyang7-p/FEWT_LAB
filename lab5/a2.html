@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        n=parseInt(prompt("Enter count Of Number :- "));
+        a=[]
+        for(i=0;i<n;i++){
+            a.push(prompt("Enter Number :- "));
+        }
+        for(i=0;i<n;i++){
+            for(j=i+1;j<n;j++){
+                if(a[i]>a[j]){
+                    temp=a[i];
+                    a[i]=a[j];
+                    a[j]=temp;
+                }
+            }
+        }
+        document.write(a)
+    </script>
+</body>
+</html>

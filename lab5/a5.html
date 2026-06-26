@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        n=parseInt(prompt("Enter Number Of Words :- "));
+        a=[]
+        for(i=0;i<n;i++){
+            a.push(prompt("Enter Word :- "));
+        }
+        x=prompt("Enter A Word To Search :- ");
+        for(i=0;i<n;i++){
+            if(a[i]===x){
+                index=i;
+            }
+        }
+        document.write("Your Word Is At :- "+index+" th position..")
+    </script>
+</body>
+</html>
