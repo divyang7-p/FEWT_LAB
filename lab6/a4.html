@@ -1,36 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-   <script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  </head>
+  <body>
+ <script>
      product=[
     {
-        name :"xyz",
-        pid :154010102,
-        price :"4500rs"
+        name :"IQ NEO 10",
+        image :"https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQZD1_6kv9-8d-rwB5k0mqIZm1RaYgK7-uDZcWRi3oQyq1pmovOZggFxILzleChJ9pudQ1yfB5VI8TaK-LFGNPVqlPCG7KT-Mx8SSFvUiVTAlpNJXULJtOn",
+     
+        price :"41999"
     },
     {
-        name :"abc",
-        pid :154010103,
-        price :"4550rs"
+        name :"GOOGLE PIXEL 9",
+        image :"https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSSmJLbqCDZZTCzuwgvY7972U0NoaTM9iySEntQCdTDAEJZ8IsFqvLvLLcaP3kUmyr9l5GVQyLE4Iy5MDbesoPYi198IP29E3tx2dmBgX9YobyZKoRHrVZQmA",
+        
+        price :"47700"
     },
     {
-        name :"pqr",
-        pid :154010104,
-        price :"4600rs"
-    },
-    {
-        name :"jkl",
-        pid :154010105,
-        price :"4650rs"
-    }]
+        name :"BOAT HEADPHONE",
+        image : "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS0sC5kB6XazRMZpP2D5beGYkuWkmBbamqEXXtWUNVCDvgdv9MEWMIc6QAB4MPTufHzz3DGD4odN4IcpG-nDMXJCJvNTGwL3mlaosKLpCfnD0VS0gPVq3Ubrg",
+       
+        price :"37000rs"
+    },]
     for(i=0;i<product.length;i++){
-        document.write(product[i].name+" : "+product[i].pid+" : "+product[i].price+"</br>");
+    document.write(`<div class="card" style="width: 18rem;">
+  <img src="${product[i].image}" class="card-img-top" alt="..."/>
+  <div class="card-body">
+    <h5 class="card-title">${product[i].name}</h5>
+    <p class="card-text">${product[i].price}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>`)
     }
    </script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
 </html>
