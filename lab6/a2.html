@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        a=[];
+        for(i=0;i<5;i++){
+            a.push(i);
+        }
+        for(i=0;i<5;i++){
+            document.write(a[i]+"</br>");
+        }
+        document.write("After Pop :- "+"</br>")
+        x=a.pop();
+        document.write(x);
+        document.write("</br>")
+        document.write("After shift :- "+"</br>")
+        y=a.shift();
+        document.write(y);
+          document.write("</br>")
+        document.write("After unshift :- "+"</br>")
+        a.unshift(5);
+        document.write(a);
+        document.write("</br>")
+         document.write("After splice :- "+"</br>")
+         a.splice(1,1,6);
+          document.write(a);
+          document.write("</br>")
+          document.write("After Sorting :- ")
+         a.sort();
+        
+        document.write(a);
+        
+    </script>
+</body>
+</html>
