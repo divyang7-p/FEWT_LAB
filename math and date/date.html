@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       dobj=new Date();
+        document.write(dobj.getFullYear()+"</br>")
+        document.write(dobj.getMonth()+1+"</br>")
+        document.write(dobj.toLocaleDateString()+ "</br>")
+        document.write(dobj.getTime()+"</br>")
+        document.write(dobj.getDay()+"</br>")
+        y1=parseInt(prompt("Enter Your Birth Year :- "));
+        x=dobj.getFullYear();
+        age=x-y1;
+        document.write("Age is :- "+age+"years")
+        function showclock(){
+            dob=new Date()
+            h=dob.getHours();
+            m=dob.getMinutes();
+            s=dob.getSeconds();
+            console.log(h+":"+m+":"+s);
+        }
+        setInterval (showclock,1000)
+    </script>
+</body>
+</html>

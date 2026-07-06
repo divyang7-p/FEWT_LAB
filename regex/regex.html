@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="pattern">
+    <input type="text" name="" id="enterpattern">
+    <button onclick="checkdata()">CLICK</button>
+    <input type="text" id="answer">
+    <script>
+        function checkdata(){
+            text1=document.getElementById("pattern");
+            text2=document.getElementById("enterpattern");
+            txt3=document.getElementById("answer")
+            
+            re=new RegExp(text1.value);
+            if(re.test(text2.value)){
+                txt3.value="VALID";
+            }else{
+                txt3.value="IN VALID";
+            }
+        }
+    </script>
+</body>
+</html>
