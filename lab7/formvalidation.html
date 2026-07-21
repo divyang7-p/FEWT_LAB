@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" onsubmit="return validateform()">
+        <label for="uname">User Name</label>
+        <input type="text" id="uname">
+        <br>
+        <label for="enr">EnrollMent Number :- </label>
+        <input type="text" id="enr">
+        <br>
+        <label for="email">Email :- </label>
+        <input type="text" id="email">
+        <br>
+        <label for="dob">Date Of Birth :- </label>
+        <input type="text" id="dob">
+        <br>
+        <label for="pass">Password :- </label>
+        <input type="text" id="pass">
+        <br>
+        <label for="passc">Confirm Passsword :- </label>
+        <input type="text" id="passc">
+        <ul id="errdisp">
+
+        </ul>
+        <button type="submit">submit</button>
+    </form>
+    <script>
+     
+            function validateform(){
+                dobj=new Date();
+                dobj1=new Date(dob)
+                uname=document.getElementById("uname");
+                enr=document.getElementById("enr");
+                email=document.getElementById("email");
+                dob=document.getElementById("dob");
+                pass=document.getElementById("pass");
+                passc=document.getElementById("passc")
+                errdisp=document.getElementById("errdisp");
+                errdisp.innerHTML=""
+                 arr=[]
+                if(uname.length<8){
+                    arr.push("user name Must Contain minimum 8 characters");
+                }
+                if(enr.length!=11 || isNaN(enr)){
+                    arr.push("Invalid enrollment Number.")
+                }
+                if((dobj.getFullYear()-dobj1.getFullYear())<18){
+                    arr.push("You Are Not Eligible.")
+                }
+                if(pass.length<8 || pass.length>12){
+                    arr.push("Password Must Contain 8 to 12 Characters")
+                }
+                let hasdig=/\d./.test(pass);
+                let hasspecial=/[^A-Za-z0-9]/.test(pass);
+                let emailpattern=/^[A-Za-z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,27}/
+                if(!emailpattern.test()){
+                    arr.push("Invalid Email");
+                }
+                if(!hasdig){
+                    arr.push("Password Must Contain One Digit.")
+                }
+                if(!hasspecial){
+                    arr.push("Password Must Contain One Special Character");
+                }
+                for(i=0;i<arr.length;i++){
+                  errdisp.innerHTML ="<li>"+arr[i]+"</li>"
+                }
+
+            }
+    </script>
+</body>
+</html>

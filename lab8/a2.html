@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="mouseevent(event)" id="btn">Click</button>
+    <h1 id="text">xyz</h1>
+    <script>
+        function mouseevent(e){
+            document.getElementById("btn").addEventListener("click",function(){
+                document.getElementById("text").innerHTML="click"
+            })
+            document.getElementById("btn").addEventListener("mousedown",function(){
+                document.getElementById("text").innerHTML="mousedown"
+                            })
+
+            document.getElementById("btn").addEventListener("dblclick",function(){
+                document.getElementById("text").innerHTML="dblclick"
+           
+            })
+        }
+    </script>
+</body>
+</html>

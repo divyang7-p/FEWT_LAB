@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Crud Operation</h2>
+    <input type="text" id="inp" />
+    <button id="btn" onclick="add()">Add</button>
+    <br><br>
+    <table id="tab" border="2">
+      <thead>
+        <tr>
+          <th>Sr.no</th>
+          <th>Name</th>
+          <th>Operation</th>
+        </tr>
+      </thead>
+      <tbody id="tabdata">
+        
+      </tbody>
+    </table>
+    <script>
+      let a = [];
+      function add() {
+        let name = document.getElementById("inp").value;
+        if(name==null){
+            alert("Enter Name..")
+        }
+        a.push(name);
+        document.getElementById("inp").value = "";
+        showdata();
+      }
+
+      function showdata() {
+        let output = "";
+        for (i = 0; i < a.length; i++) {
+          output += `<tr>
+                    <td>${i + 1}</td>
+                    <td>${a[i]}</td>
+                    <td>
+                        <button id="update" onclick="update(${i})">Edit</button>
+                        <button id="dalete" onclick="deletename(${i})">Delete</button>
+                        </td>
+                        </tr>    
+                `;
+        }
+        document.getElementById("tabdata").innerHTML = output;
+      }
+      function update(index){
+       let x= prompt("Enter New Name :- ");
+       a[index]=x;
+       showdata();
+      }
+      function deletename(index){
+        a.splice(index,1);
+        showdata();
+      }
+    </script>
+  </body>
+</html>
