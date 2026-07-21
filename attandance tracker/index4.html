@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker Pro</title>
+    <style>
+        /* Theme Palettes */
+        .theme-dark-green {
+            --bg-color: #0b1d12;
+            --card-bg: #142f1d;
+            --accent: #2ecc71;
+            --accent-hover: #27ae60;
+            --border-color: #1f472d;
+            --text-main: #e2ebd5;
+            --text-muted: #8fa896;
+            --focus-glow: #3ae374;
+            --danger-red: #e74c3c;
+            --download-blue: #3498db;
+        }
+
+        .theme-classic-dark {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent: #bb86fc;
+            --accent-hover: #9c27b0;
+            --border-color: #333333;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --focus-glow: #da70d6;
+            --danger-red: #cf6679;
+            --download-blue: #03dac6;
+        }
+
+        .theme-light {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --accent: #27ae60;
+            --accent-hover: #218c53;
+            --border-color: #dddddd;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --focus-glow: #2ecc71;
+            --danger-red: #c0392b;
+            --download-blue: #2980b9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 700px;
+            background: var(--card-bg);
+            margin: 0 auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            position: relative;
+            transition: background 0.3s, border 0.3s;
+        }
+        
+        /* Theme selector layout */
+        .theme-selector-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .theme-select {
+            padding: 6px 10px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: var(--accent);
+            margin-top: 0;
+        }
+        .instructions {
+            background: rgba(128, 128, 128, 0.08);
+            border-left: 4px solid var(--accent);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .instructions strong { color: var(--text-main); }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+        .row .form-group {
+            flex: 1;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s, transform 0.1s;
+        }
+        /* Light mode contrast tweak for text inside primary button */
+        .theme-light button { color: #fff; }
+        .theme-dark-green button { color: #0b1d12; }
+        
+        button:hover { background-color: var(--accent-hover); }
+        button:active { transform: scale(0.98); }
+        .hidden { display: none; }
+        
+        /* Controls Row inside active session */
+        .action-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .btn-danger {
+            background-color: var(--danger-red);
+            color: white !important;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .btn-danger:hover { filter: brightness(0.9); }
+
+        /* Attendance List Styles */
+        .student-list {
+            margin-top: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .student-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(128,128,128,0.05);
+            padding: 12px 20px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .student-row:hover { background: rgba(128,128,128,0.1); }
+        .student-row.active-focus {
+            background: rgba(128,128,128,0.15);
+            border-color: var(--focus-glow);
+            box-shadow: 0 0 8px var(--focus-glow);
+            outline: none;
+        }
+        .student-row input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+        .status-text {
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 15px;
+        }
+        .status-present { color: var(--accent); }
+        .status-absent { color: var(--danger-red); }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+
+        /* Report Grouping Blocks */
+        .report-block {
+            background: rgba(128, 128, 128, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .report-block h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        .present-heading { color: var(--accent); }
+        .absent-heading { color: var(--danger-red); }
+        
+        .roll-pool {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            background: var(--bg-color);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-finish { background-color: #16a085; color: white !important; margin-top: 20px; }
+        .btn-finish:hover { background-color: #11806a; }
+        .btn-download { background-color: var(--download-blue); color: white !important; margin-top: 20px; }
+        .btn-download:hover { filter: brightness(0.9); }
+    </style>
+</head>
+<body class="theme-dark-green"> <div class="container">
+    <div class="theme-selector-container">
+        <label for="themeSelect" style="display:inline; margin:0; font-size:14px;">Theme:</label>
+        <select id="themeSelect" class="theme-select" onchange="changeTheme(this.value)">
+            <option value="theme-dark-green">Dark Green</option>
+            <option value="theme-classic-dark">Classic Dark</option>
+            <option value="theme-light">Light Mode</option>
+        </select>
+    </div>
+
+    <div id="setup-area">
+        <h2>New Attendance Session</h2>
+        <div class="form-group">
+            <label for="session-name">Session Name</label>
+            <input type="text" id="session-name" placeholder="e.g., Computer Science - Class 10">
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="start-roll">Start Roll No.</label>
+                <input type="number" id="start-roll" placeholder="1" value="1">
+            </div>
+            <div class="form-group">
+                <label for="end-roll">End Roll No.</label>
+                <input type="number" id="end-roll" placeholder="20">
+            </div>
+        </div>
+        <button id="start-btn" onclick="startSession()">Start a Session</button>
+    </div>
+
+    <div id="session-area" class="hidden">
+        <h3 id="active-session-title"></h3>
+        
+        <div class="action-bar">
+            <button class="btn-danger" onclick="markAllAbsent()">🛑 Mark All Absent</button>
+        </div>
+
+        <div class="instructions">
+            ⌨️ <strong>Controls:</strong> Arrow keys <strong>(↓ / ↑)</strong> to move. <strong>Enter ↵</strong> to toggle present/absent.
+        </div>
+
+        <div id="student-list" class="student-list">
+            </div>
+        
+        <button class="btn-finish" onclick="finishSession()">Finish & Generate Report</button>
+    </div>
+
+    <div id="report-area" class="hidden">
+        <h2>Attendance Summary</h2>
+        <p><strong>Session:</strong> <span id="report-title"></span></p>
+        <p><strong>Total Roster Size:</strong> <span id="report-total"></span> students</p>
+        
+        <div class="report-block">
+            <h4 class="present-heading">🟢 Present Students (<span id="count-present">0</span>)</h4>
+            <div id="pool-present" class="roll-pool">None</div>
+        </div>
+
+        <div class="report-block">
+            <h4 class="absent-heading">🔴 Absent Students (<span id="count-absent">0</span>)</h4>
+            <div id="pool-absent" class="roll-pool">None</div>
+        </div>
+
+        <button class="btn-download" onclick="downloadCSV()">📥 Download CSV Report</button>
+        <button style="margin-top: 10px; background-color: #34495e; color: white;" onclick="resetTracker()">Start New Session</button>
+    </div>
+</div>
+
+<script>
+    let rollNumbers = [];
+    let focusedIndex = 0; 
+    let sessionName = "";
+    let finalPresentRolls = [];
+    let finalAbsentRolls = [];
+
+    function changeTheme(themeName) {
+        document.body.className = themeName;
+    }
+
+    function startSession() {
+        sessionName = document.getElementById('session-name').value.trim();
+        const startRoll = parseInt(document.getElementById('start-roll').value);
+        const endRoll = parseInt(document.getElementById('end-roll').value);
+
+        if (!sessionName) { alert('Please enter a session name.'); return; }
+        if (isNaN(startRoll) || isNaN(endRoll) || startRoll > endRoll || startRoll <= 0) {
+            alert('Please enter a valid range of roll numbers.'); return;
+        }
+
+        rollNumbers = [];
+        for (let i = startRoll; i <= endRoll; i++) { rollNumbers.push(i); }
+
+        document.getElementById('setup-area').classList.add('hidden');
+        document.getElementById('session-area').classList.remove('hidden');
+        document.getElementById('active-session-title').innerText = `Session: ${sessionName}`;
+
+        const listContainer = document.getElementById('student-list');
+        listContainer.innerHTML = "";
+
+        rollNumbers.forEach((roll, index) => {
+            const row = document.createElement('div');
+            row.className = 'student-row';
+            row.id = `student-row-${index}`;
+            row.setAttribute('tabindex', '0');
+            row.onclick = () => { setFocus(index); toggleAttendance(index); };
+            row.onfocus = () => { setFocus(index); };
+
+            row.innerHTML = `
+                <span><strong>Roll No. ${roll}</strong></span>
+                <div style="display: flex; align-items: center;">
+                    <span class="status-text status-present" id="status-text-${index}">Present</span>
+                    <input type="checkbox" id="chk-${index}" checked onclick="event.stopPropagation(); updateStatusText(${index});">
+                </div>
+            `;
+            listContainer.appendChild(row);
+        });
+
+        focusedIndex = 0;
+        updateFocusUI();
+        
+        window.addEventListener('keydown', handleKeyboardNavigation);
+    }
+
+    function setFocus(index) {
+        focusedIndex = index;
+        updateFocusUI();
+    }
+
+    function updateFocusUI() {
+        rollNumbers.forEach((_, idx) => {
+            const element = document.getElementById(`student-row-${idx}`);
+            if(element) element.classList.remove('active-focus');
+        });
+        
+        const activeRow = document.getElementById(`student-row-${focusedIndex}`);
+        if (activeRow) {
+            activeRow.classList.add('active-focus');
+            activeRow.focus();
+            activeRow.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+    }
+
+    function toggleAttendance(index) {
+        const checkbox = document.getElementById(`chk-${index}`);
+        checkbox.checked = !checkbox.checked;
+        updateStatusText(index);
+    }
+
+    function updateStatusText(index) {
+        const checkbox = document.getElementById(`chk-${index}`);
+        const textLabel = document.getElementById(`status-text-${index}`);
+        if (checkbox.checked) {
+            textLabel.innerText = "Present";
+            textLabel.className = "status-text status-present";
+        } else {
+            textLabel.innerText = "Absent";
+            textLabel.className = "status-text status-absent";
+        }
+    }
+
+    function markAllAbsent() {
+        // Confirmation alert block
+        const userConfirmed = confirm("Are you sure you want to mark ALL students as Absent?");
+        
+        if (userConfirmed) {
+            rollNumbers.forEach((_, index) => {
+                const checkbox = document.getElementById(`chk-${index}`);
+                if (checkbox) {
+                    checkbox.checked = false;
+                    updateStatusText(index);
+                }
+            });
+        }
+    }
+
+    function handleKeyboardNavigation(e) {
+        if (document.getElementById('session-area').classList.contains('hidden')) return;
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (focusedIndex < rollNumbers.length - 1) {
+                focusedIndex++;
+                updateFocusUI();
+            }
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (focusedIndex > 0) {
+                focusedIndex--;
+                updateFocusUI();
+            }
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            toggleAttendance(focusedIndex);
+            
+            if (focusedIndex < rollNumbers.length - 1) {
+                focusedIndex++;
+                updateFocusUI();
+            }
+        }
+    }
+
+    function finishSession() {
+        window.removeEventListener('keydown', handleKeyboardNavigation);
+
+        document.getElementById('session-area').classList.add('hidden');
+        document.getElementById('report-area').classList.remove('hidden');
+
+        document.getElementById('report-title').innerText = sessionName;
+        document.getElementById('report-total').innerText = rollNumbers.length;
+
+        finalPresentRolls = [];
+        finalAbsentRolls = [];
+
+        rollNumbers.forEach((roll, index) => {
+            const isPresent = document.getElementById(`chk-${index}`).checked;
+            if (isPresent) {
+                finalPresentRolls.push(roll);
+            } else {
+                finalAbsentRolls.push(roll);
+            }
+        });
+
+        document.getElementById('count-present').innerText = finalPresentRolls.length;
+        document.getElementById('count-absent').innerText = finalAbsentRolls.length;
+
+        document.getElementById('pool-present').innerText = finalPresentRolls.length > 0 ? finalPresentRolls.join(', ') : 'None';
+        document.getElementById('pool-absent').innerText = finalAbsentRolls.length > 0 ? finalAbsentRolls.join(', ') : 'None';
+    }
+
+    function downloadCSV() {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += `Session Summary,${sessionName}\n`;
+        csvContent += `Total Students,${rollNumbers.length}\n`;
+        csvContent += `Total Present,${finalPresentRolls.length}\n`;
+        csvContent += `Total Absent,${finalAbsentRolls.length}\n\n`;
+        csvContent += `Status,Roll Numbers\n`;
+        csvContent += `Present,"${finalPresentRolls.join(', ')}"\n`;
+        csvContent += `Absent,"${finalAbsentRolls.join(', ')}"\n`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        
+        const safeFileName = sessionName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        link.setAttribute("download", `${safeFileName}_report.csv`);
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function resetTracker() {
+        document.getElementById('report-area').classList.add('hidden');
+        document.getElementById('setup-area').classList.remove('hidden');
+        document.getElementById('session-name').value = '';
+        document.getElementById('end-roll').value = '';
+        finalPresentRolls = [];
+        finalAbsentRolls = [];
+    }
+</script>
+
+</body>
+</html>
