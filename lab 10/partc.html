@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>Select Roll Numbers :-</h3>
+    <input type="checkbox" value="101" onchange="selected()" />101 <br />
+    <input type="checkbox" value="102" onchange="selected()" />102 <br />
+    <input type="checkbox" value="103" onchange="selected()" />103 <br />
+    <input type="checkbox" value="104" onchange="selected()" />104 <br />
+    <input type="checkbox" value="104" onchange="selected()" />105 <br />
+
+    <h3>Selected roll numbers :-</h3>
+    <p id="result"></p>
+    <br />
+    <script>
+      function selected() {
+        let checkboxes = document.querySelectorAll(
+          'input[type="checkbox"]:checked',
+        );
+        let sr = [];
+        checkboxes.forEach((checkboxes) => {
+          sr.push(checkboxes.value);
+        });
+        document.getElementById("result").innerHTML = sr.join(", ");
+      }
+    </script>
+  </body>
+</html>
