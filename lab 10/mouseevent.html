@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2 id="msg">Click Any Where via mouse in browser window..</h2>
+    <script>
+      document.addEventListener("mousedown", (e) => {
+        if (e.button == 0) {
+          document.getElementById("msg").innerHTML = "Left Clicked";
+        } else if (e.button == 1) {
+          document.getElementById("msg").innerHTML = "Scroll";
+        } else if (e.button == 2) {
+          document.getElementById("msg").innerHTML = "Right Clicked";
+        }
+      });
+      document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+      });
+    </script>
+  </body>
+</html>
